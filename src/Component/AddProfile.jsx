@@ -22,7 +22,7 @@ function AddProfile() {
     formData.append("userId", userId);
 
     try {
-      const result = await axios.post("http://localhost:8000/api/addProfile", formData, {
+      const result = await axios.post("https://instagram-clone-backend-v35p.onrender.com/api/addProfile", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
@@ -30,7 +30,7 @@ function AddProfile() {
       localStorage.setItem("user", JSON.stringify(result.data.user));
 
       if (result.data.filePath) {
-        setUploadedImage("http://localhost:8000" + result.data.filePath);
+        setUploadedImage("https://instagram-clone-backend-v35p.onrender.com" + result.data.filePath);
         setPreview(null);
       }
     } catch (err) {
