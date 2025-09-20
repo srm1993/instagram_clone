@@ -7,6 +7,8 @@ function DashBoard() {
   const [currentUser, setCurrentUser] = useState(
     JSON.parse(localStorage.getItem("user"))
   );
+  const [editingPostId, setEditingPostId] = useState(null);
+  const [newCaption, setNewCaption] = useState("");
 
   useEffect(() => {
     fetchPosts();
@@ -44,6 +46,20 @@ function DashBoard() {
     }
   };
 
+  const handleDeleteComment = async (postId, commentId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8000/api/posts/${postId}/comment/${commentId}`,
+        {
+          data: { userId: currentUser._id },
+        }
+      );
+      fetchPosts();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleFollowToggle = async (followUserId) => {
     try {
       const isFollowing = currentUser.following.includes(followUserId);
@@ -68,6 +84,30 @@ function DashBoard() {
 
       setCurrentUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
+      fetchPosts();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const startEditing = (post) => {
+    setEditingPostId(post._id);
+    setNewCaption(post.caption);
+  };
+
+  const cancelEditing = () => {
+    setEditingPostId(null);
+    setNewCaption("");
+  };
+
+  const saveCaption = async (postId) => {
+    try {
+      await axios.put(`http://localhost:8000/api/posts/${postId}/caption`, {
+        userId: currentUser._id,
+        caption: newCaption,
+      });
+      setEditingPostId(null);
+      setNewCaption("");
       fetchPosts();
     } catch (err) {
       console.error(err);
@@ -109,11 +149,13 @@ function DashBoard() {
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-5px)";
-                e.currentTarget.style.boxShadow = "0 12px 25px rgba(0,0,0,0.15)";
+                e.currentTarget.style.boxShadow =
+                  "0 12px 25px rgba(0,0,0,0.15)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 8px 20px rgba(0,0,0,0.1)";
+                e.currentTarget.style.boxShadow =
+                  "0 8px 20px rgba(0,0,0,0.1)";
               }}
             >
               {/* Header */}
@@ -194,12 +236,6 @@ function DashBoard() {
                     color: post.likes.includes(currentUser._id) ? "red" : "black",
                     transition: "transform 0.2s ease",
                   }}
-                  onMouseDown={(e) => {
-                    e.currentTarget.style.transform = "scale(1.3)";
-                  }}
-                  onMouseUp={(e) => {
-                    e.currentTarget.style.transform = "scale(1)";
-                  }}
                 >
                   {post.likes.includes(currentUser._id) ? (
                     <FaHeart />
@@ -212,11 +248,68 @@ function DashBoard() {
                 </span>
               </div>
 
-              {/* Caption */}
+              {/* Caption (Editable if owner) */}
               <div style={{ padding: "0 18px 10px" }}>
-                <p style={{ margin: 0 }}>
-                  <strong>{post.userId.username}</strong> {post.caption}
-                </p>
+                {editingPostId === post._id ? (
+                  <div>
+                    <input
+                      type="text"
+                      value={newCaption}
+                      onChange={(e) => setNewCaption(e.target.value)}
+                      style={{
+                        width: "100%",
+                        padding: "5px",
+                        marginBottom: "5px",
+                        fontSize: "14px",
+                      }}
+                    />
+                    <button
+                      onClick={() => saveCaption(post._id)}
+                      style={{
+                        background: "#0095f6",
+                        color: "#fff",
+                        border: "none",
+                        padding: "5px 10px",
+                        marginRight: "5px",
+                        cursor: "pointer",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={cancelEditing}
+                      style={{
+                        background: "#eee",
+                        border: "none",
+                        padding: "5px 10px",
+                        cursor: "pointer",
+                        borderRadius: "5px",
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                ) : (
+                  <p style={{ margin: 0 }}>
+                    <strong>{post.userId.username}</strong> {post.caption}{" "}
+                    {post.userId._id === currentUser._id && (
+                      <button
+                        onClick={() => startEditing(post)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          color: "#0095f6",
+                          cursor: "pointer",
+                          fontSize: "12px",
+                          marginLeft: "8px",
+                        }}
+                      >
+                        Edit
+                      </button>
+                    )}
+                  </p>
+                )}
               </div>
 
               {/* Comments */}
@@ -228,9 +321,28 @@ function DashBoard() {
                       margin: "5px 0",
                       fontSize: "14px",
                       color: "#444",
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
                     }}
                   >
-                    <strong>{c.userId.username}</strong> {c.text}
+                    <span>
+                      <strong>{c.userId.username}</strong> {c.text}
+                    </span>
+                    {c.userId._id === currentUser._id && (
+                      <button
+                        onClick={() => handleDeleteComment(post._id, c._id)}
+                        style={{
+                          background: "none",
+                          border: "none",
+                          color: "red",
+                          cursor: "pointer",
+                          fontSize: "12px",
+                        }}
+                      >
+                        🗑️
+                      </button>
+                    )}
                   </p>
                 ))}
               </div>

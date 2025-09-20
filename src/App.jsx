@@ -5,6 +5,9 @@ import Login from "./Component/Login";
 import AddProfile from "./Component/AddProfile";
 import DashBoard from "./Component/DashBoard";
 import UploadPost from "./Component/UploadPost";
+import UploadReel from "./Component/UploadReel";
+import ViewReels from "./Component/ViewReels";
+import Chat from "./Component/Chat";
 function App(){
   let isLoggedIn=localStorage.getItem("user")?true:false;
   return(
@@ -16,6 +19,9 @@ function App(){
         <Route path="/addProfile" element={<AddProfile />} />
         <Route path="/dashboard" element={<DashBoard />} />
         <Route path="/uploadPost" element={<UploadPost />} />
+        <Route path="/uploadReel" element={<UploadReel />} />
+        <Route path="/viewReels" element={<ViewReels />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,4 +1,7 @@
 import { Link } from "react-router-dom";
+import { FaInstagram, FaPlusSquare, FaVideo, FaCommentDots } from "react-icons/fa";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import { MdLogout } from "react-icons/md";
 
 function Header({ isLoggedIn }) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -17,23 +20,26 @@ function Header({ isLoggedIn }) {
 
   const navStyle = {
     display: "flex",
-    gap: "15px",
+    gap: "20px",
     alignItems: "center",
+    fontSize: "22px", // Icon size
+    color: "#333",
   };
 
-  const linkStyle = {
+  const iconStyle = {
     color: "#333",
     textDecoration: "none",
-    fontWeight: "500",
+    display: "flex",
+    alignItems: "center",
+    gap: "6px",
   };
 
   const buttonStyle = {
     border: "none",
-    background: "#e74c3c",
-    color: "white",
-    padding: "6px 12px",
-    borderRadius: "4px",
+    background: "transparent",
     cursor: "pointer",
+    fontSize: "22px",
+    color: "#e74c3c",
   };
 
   return (
@@ -41,12 +47,12 @@ function Header({ isLoggedIn }) {
       {/* Logo / Brand */}
       <Link
         to={isLoggedIn ? "/dashboard" : "/"}
-        style={{ display: "flex", alignItems: "center", gap: "10px" }}
+        style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}
       >
-        {/* Profile Image */}
+        {/* Profile Image OR Instagram Logo */}
         {user && user.profilePicture ? (
           <img
-            src={`http://localhost:8000/profiles/${user.profilePicture}`} // e.g. "/profiles/filename.png"
+            src={`http://localhost:8000/profiles/${user.profilePicture}`}
             alt="Profile"
             style={{
               width: "40px",
@@ -57,9 +63,7 @@ function Header({ isLoggedIn }) {
             }}
           />
         ) : (
-          <span style={{ fontSize: "18px", fontWeight: "bold" }}>
-            Instagram
-          </span>
+          <FaInstagram size={32} color="#e1306c" /> // Instagram icon
         )}
       </Link>
 
@@ -67,27 +71,39 @@ function Header({ isLoggedIn }) {
       <nav style={navStyle}>
         {isLoggedIn ? (
           <>
-            <Link to="/addProfile" style={linkStyle}>
-              Add Profile
+            <Link to="/addProfile" style={iconStyle} title="Change Profile">
+              <AiOutlineUserAdd />
             </Link>
-            <Link to={"/uploadPost"} style={linkStyle}>Upload Post</Link>
+            <Link to="/uploadPost" style={iconStyle} title="Upload Post">
+              <FaPlusSquare />
+            </Link>
+            <Link to="/uploadReel" style={iconStyle} title="Upload Reels">
+              <FaVideo />
+            </Link>
+            <Link to="/viewReels" style={iconStyle} title="Reels">
+              🎞️
+            </Link>
+            <Link to="/chat" style={iconStyle} title="Chat">
+              <FaCommentDots />
+            </Link>
             <button
               style={buttonStyle}
               onClick={() => {
                 localStorage.removeItem("user");
                 window.location.href = "/";
               }}
+              title="Logout"
             >
-              Logout
+              <MdLogout />
             </button>
           </>
         ) : (
           <>
-            <Link to="/register" style={linkStyle}>
-              Register
+            <Link to="/register" style={iconStyle} title="Register">
+              <AiOutlineUserAdd />
             </Link>
-            <Link to="/" style={linkStyle}>
-              Login
+            <Link to="/" style={iconStyle} title="Login">
+              <FaInstagram />
             </Link>
           </>
         )}
