@@ -52,7 +52,7 @@ function Header({ isLoggedIn }) {
         {/* Profile Image OR Instagram Logo */}
         {user && user.profilePicture ? (
           <img
-            src={`http://localhost:8000/profiles/${user.profilePicture}`}
+            src={`https://instagram-clone-backend-v35p.onrender.com/profiles/${user.profilePicture}`}
             alt="Profile"
             style={{
               width: "40px",
