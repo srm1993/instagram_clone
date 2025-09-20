@@ -13,7 +13,7 @@ function LandingPage() {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/posts");
+      const res = await axios.get("https://instagram-clone-backend-v35p.onrender.com/api/posts");
       setPosts(res.data);
     } catch (err) {
       console.error(err);
@@ -22,7 +22,7 @@ function LandingPage() {
 
   const handleLike = async (postId) => {
     try {
-      await axios.put(`http://localhost:8000/api/posts/${postId}/like`, {
+      await axios.put(`https://instagram-clone-backend-v35p.onrender.com/api/posts/${postId}/like`, {
         userId: currentUser._id,
       });
       fetchPosts();
@@ -33,7 +33,7 @@ function LandingPage() {
 
   const handleComment = async (postId, text) => {
     try {
-      await axios.post(`http://localhost:8000/api/posts/${postId}/comment`, {
+      await axios.post(`https://instagram-clone-backend-v35p.onrender.com/api/posts/${postId}/comment`, {
         userId: currentUser._id,
         text,
       });
@@ -48,7 +48,7 @@ function LandingPage() {
       // if already following → unfollow
       const isFollowing = currentUser.following.includes(followUserId);
 
-      await axios.post("http://localhost:8000/api/users/follow", {
+      await axios.post("https://instagram-clone-backend-v35p.onrender.com/api/users/follow", {
         userId: currentUser._id,
         followId: followUserId,
       });
@@ -98,7 +98,7 @@ function LandingPage() {
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
-                src={`http://localhost:8000/profiles/${post.userId.profilePicture}`}
+                src={`https://instagram-clone-backend-v35p.onrender.com/profiles/${post.userId.profilePicture}`}
                 alt="profile"
                 style={{
                   width: "40px",
@@ -136,7 +136,7 @@ function LandingPage() {
           {/* Post Image */}
           <div style={{ marginTop: "10px" }}>
             <img
-              src={`http://localhost:8000/posts/${post.image}`}
+              src={`https://instagram-clone-backend-v35p.onrender.com/posts/${post.image}`}
               alt="post"
               style={{ width: "100%", borderRadius: "10px" }}
             />
@@ -163,7 +163,7 @@ function LandingPage() {
                 }}
               >
                 <img
-                  src={`http://localhost:8000/profiles/${c.userId.profilePicture}`}
+                  src={`https://instagram-clone-backend-v35p.onrender.com/profiles/${c.userId.profilePicture}`}
                   alt="profile"
                   style={{
                     width: "30px",
