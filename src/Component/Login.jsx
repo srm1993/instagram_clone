@@ -22,7 +22,7 @@ function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:8000/api/login", formData);
+            const res = await axios.post("https://instagram-clone-backend-v35p.onrender.com/api/login", formData);
             alert(res.data.message);
             localStorage.setItem("user", JSON.stringify(res.data.user));
             window.location.href = "/dashboard";
