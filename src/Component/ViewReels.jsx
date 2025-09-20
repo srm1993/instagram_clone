@@ -13,7 +13,7 @@ function ViewReels() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/reels")
+      .get("hhttps://instagram-clone-backend-v35p.onrender.com/api/reels")
       .then((res) => {
         setReels(res.data);
         const initLikes = {};
@@ -31,7 +31,7 @@ function ViewReels() {
   // Like reel
   const handleLike = async (id) => {
     try {
-      await axios.post(`http://localhost:8000/api/${id}/like`, {
+      await axios.post(`https://instagram-clone-backend-v35p.onrender.com/api/${id}/like`, {
         userId: user._id,
       });
 
@@ -66,7 +66,7 @@ function ViewReels() {
     if (!text || !text.trim()) return;
 
     try {
-      await axios.post(`http://localhost:8000/api/${id}/comment`, {
+      await axios.post(`https://instagram-clone-backend-v35p.onrender.com/api/${id}/comment`, {
         userId: user._id,
         text,
       });
@@ -110,7 +110,7 @@ function ViewReels() {
         >
           {/* Video */}
           <video
-            src={`http://localhost:8000/reels/${reel.videoUrl}`}
+            src={`https://instagram-clone-backend-v35p.onrender.com/reels/${reel.videoUrl}`}
             controls={false}
             autoPlay
             loop
