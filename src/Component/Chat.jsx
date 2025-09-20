@@ -18,7 +18,7 @@ function Chat() {
 
     // Fetch followers of current user
     axios
-      .get(`http://localhost:8000/api/followers/${currentUser._id}`)
+      .get(`https://instagram-clone-backend-v35p.onrender.com/api/followers/${currentUser._id}`)
       .then((res) => setFollowers(res.data))
       .catch((err) => console.error(err));
   }, [currentUser._id]);
@@ -30,7 +30,7 @@ function Chat() {
     // Fetch chat history
     axios
       .get(
-        `http://localhost:8000/api/messages/${currentUser._id}/${selectedFollower._id}`
+        `https://instagram-clone-backend-v35p.onrender.com/api/messages/${currentUser._id}/${selectedFollower._id}`
       )
       .then((res) => setChat(res.data))
       .catch((err) => console.error(err));
