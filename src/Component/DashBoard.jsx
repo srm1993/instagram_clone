@@ -16,7 +16,7 @@ function DashBoard() {
 
   const fetchPosts = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/posts");
+      const res = await axios.get("https://instagram-clone-backend-v35p.onrender.com/api/posts");
       setPosts(res.data);
     } catch (err) {
       console.error(err);
@@ -25,7 +25,7 @@ function DashBoard() {
 
   const handleLike = async (postId) => {
     try {
-      await axios.put(`http://localhost:8000/api/posts/${postId}/like`, {
+      await axios.put(`https://instagram-clone-backend-v35p.onrender.com/api/posts/${postId}/like`, {
         userId: currentUser._id,
       });
       fetchPosts();
@@ -36,7 +36,7 @@ function DashBoard() {
 
   const handleComment = async (postId, text) => {
     try {
-      await axios.post(`http://localhost:8000/api/posts/${postId}/comment`, {
+      await axios.post(`https://instagram-clone-backend-v35p.onrender.com/api/posts/${postId}/comment`, {
         userId: currentUser._id,
         text,
       });
@@ -49,7 +49,7 @@ function DashBoard() {
   const handleDeleteComment = async (postId, commentId) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/posts/${postId}/comment/${commentId}`,
+        `https://instagram-clone-backend-v35p.onrender.com/api/posts/${postId}/comment/${commentId}`,
         {
           data: { userId: currentUser._id },
         }
@@ -64,7 +64,7 @@ function DashBoard() {
     try {
       const isFollowing = currentUser.following.includes(followUserId);
 
-      await axios.post("http://localhost:8000/api/users/follow", {
+      await axios.post("https://instagram-clone-backend-v35p.onrender.com/api/users/follow", {
         userId: currentUser._id,
         followId: followUserId,
       });
@@ -102,7 +102,7 @@ function DashBoard() {
 
   const saveCaption = async (postId) => {
     try {
-      await axios.put(`http://localhost:8000/api/posts/${postId}/caption`, {
+      await axios.put(`https://instagram-clone-backend-v35p.onrender.com/api/posts/${postId}/caption`, {
         userId: currentUser._id,
         caption: newCaption,
       });
@@ -169,7 +169,7 @@ function DashBoard() {
               >
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <img
-                    src={`http://localhost:8000/profiles/${post.userId.profilePicture}`}
+                    src={`https://instagram-clone-backend-v35p.onrender.com/profiles/${post.userId.profilePicture}`}
                     alt="profile"
                     style={{
                       width: "45px",
@@ -213,7 +213,7 @@ function DashBoard() {
               {/* Post Image */}
               {post.image && (
                 <img
-                  src={`http://localhost:8000/posts/${post.image}`}
+                  src={`https://instagram-clone-backend-v35p.onrender.com/posts/${post.image}`}
                   alt="post"
                   style={{
                     width: "100%",
