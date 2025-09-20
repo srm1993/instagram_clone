@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const socket = io("http://localhost:8000");
+const socket = io("https://instagram-clone-backend-v35p.onrender.com");
 
 function Chat() {
   const currentUser = JSON.parse(localStorage.getItem("user"));
