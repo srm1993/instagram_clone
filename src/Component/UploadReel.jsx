@@ -15,7 +15,7 @@ function UploadReel() {
     formData.append("caption", caption);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/uploadReel", formData, {
+      const res = await axios.post("https://instagram-clone-backend-v35p.onrender.com/api/uploadReel", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert(res.data.message);
