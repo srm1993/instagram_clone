@@ -24,7 +24,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:8000/api/register", formData);
+      const res = await axios.post("https://instagram-clone-backend-v35p.onrender.com/api/register", formData);
       setMessage(res.data.message);
     } catch (err) {
       if (err.response) {
